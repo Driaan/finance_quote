@@ -1,4 +1,4 @@
-import 'package:finance_quote/finance_quote.dart';
+import 'package:fin_quote/fin_quote.dart';
 
 Future<void> main(List<String> arguments) async {
   final Map<String, Map<String, dynamic>> quoteRaw =

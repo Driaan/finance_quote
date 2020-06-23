@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-library finance_quote;
+library fin_quote;
 
-import 'package:finance_quote/src/quote_providers/binance.dart';
+import 'package:fin_quote/src/quote_providers/binance.dart';
 import 'package:meta/meta.dart';
-import 'package:finance_quote/src/utils/app_logger.dart';
-import 'package:finance_quote/src/quote_providers/coincap.dart';
-import 'package:finance_quote/src/quote_providers/morningstarDe.dart';
-import 'package:finance_quote/src/quote_providers/morningstarEs.dart';
-import 'package:finance_quote/src/quote_providers/yahoo.dart';
+import 'package:fin_quote/src/utils/app_logger.dart';
+import 'package:fin_quote/src/quote_providers/coincap.dart';
+import 'package:fin_quote/src/quote_providers/morningstarDe.dart';
+import 'package:fin_quote/src/quote_providers/morningstarEs.dart';
+import 'package:fin_quote/src/quote_providers/yahoo.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
