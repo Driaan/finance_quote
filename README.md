@@ -45,7 +45,6 @@ If you're making multiple quote requests to the same server, you can request all
   
   * Yahoo
   * Morningstar
-  * Coinmarketcap
   * Coincap
   * Binance
   

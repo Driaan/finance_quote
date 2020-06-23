@@ -1,3 +1,8 @@
+## [0.1.3] - 23/6/20
+
+*  Remove not working Coinmarketcap backend.
+*  Update dependencies & ci
+
 ## [0.1.2] - 19/9/19
 
 *  Refactor to allow parallel quote retrieval.
