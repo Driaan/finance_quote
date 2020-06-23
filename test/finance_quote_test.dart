@@ -212,15 +212,18 @@ void main() {
       }
 
       expect(quote.keys.length, 3);
-      expect(quote['KO'].keys.length, 2);
+      expect(quote['KO'].keys.length, 3);
       expect(quote['KO']['price'], '54.75');
       expect(quote['KO']['currency'], 'USD');
-      expect(quote['GOOG'].keys.length, 2);
+      expect(quote['KO']['change'], '0.39');
+      expect(quote['GOOG'].keys.length, 3);
       expect(quote['GOOG']['price'], '1163.58');
       expect(quote['GOOG']['currency'], 'USD');
-      expect(quote['AIR.PA'].keys.length, 2);
+      expect(quote['GOOG']['change'], '-0.45');
+      expect(quote['AIR.PA'].keys.length, 3);
       expect(quote['AIR.PA']['price'], '122.56');
       expect(quote['AIR.PA']['currency'], 'EUR');
+      expect(quote['AIR.PA']['change'], '-0.23');
 
       verify(client.get(
               'https://query1.finance.yahoo.com/v7/finance/quote?symbols=KO,GOOG,AIR.PA'))
