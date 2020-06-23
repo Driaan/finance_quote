@@ -10,13 +10,14 @@ class AppLogger extends LogPrinter {
   AppLogger(this.className);
 
   @override
-  void log(LogEvent event) {
+  List<String> log(LogEvent event) {
     final String emoji = PrettyPrinter.levelEmojis[event.level];
     if (event.error != null) {
-      println(
-          '$emoji${event.level} - [$className] ${event.message} ${event.error} ${event.stackTrace}');
+      return [
+        '$emoji${event.level} - [$className] ${event.message} ${event.error} ${event.stackTrace}'
+      ];
     } else {
-      println('$emoji${event.level} - [$className] ${event.message}');
+      return ['$emoji${event.level} - [$className] ${event.message}'];
     }
   }
 }

@@ -83,6 +83,8 @@ class Yahoo {
     return <String, String>{
       'price': (rawQuote['regularMarketPrice'] as double).toStringAsFixed(2),
       'currency': (rawQuote['currency'] as String).toUpperCase(),
+      'change':
+          (rawQuote['regularMarketChangePercent'] as double).toStringAsFixed(2),
     };
   }
 }

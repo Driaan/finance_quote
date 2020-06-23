@@ -24,7 +24,7 @@ void main() {
       }
 
       expect(quote.keys.length, 1);
-      expect(quote['KO'].keys.length, 2);
+      expect(quote['KO'].keys.length, 3);
     });
 
     test('MorningstarDe', () async {
@@ -53,20 +53,6 @@ void main() {
 
       expect(quote.keys.length, 1);
       expect(quote['0P000001BW'].keys.length, 2);
-    });
-
-    test('CoinMarketCap', () async {
-      Map<String, Map<String, dynamic>> quote;
-      try {
-        quote = await FinanceQuote.getPrice(
-            quoteProvider: QuoteProvider.coinmarketcap,
-            symbols: <String>['BTC']);
-      } catch (e) {
-        expect(e, 'No exception');
-      }
-
-      expect(quote.keys.length, 1);
-      expect(quote['BTC'].keys.length, 2);
     });
 
     test('Coincap', () async {

@@ -8,7 +8,6 @@ import 'package:finance_quote/src/quote_providers/binance.dart';
 import 'package:meta/meta.dart';
 import 'package:finance_quote/src/utils/app_logger.dart';
 import 'package:finance_quote/src/quote_providers/coincap.dart';
-import 'package:finance_quote/src/quote_providers/coinmarketcap.dart';
 import 'package:finance_quote/src/quote_providers/morningstarDe.dart';
 import 'package:finance_quote/src/quote_providers/morningstarEs.dart';
 import 'package:finance_quote/src/quote_providers/yahoo.dart';
@@ -16,14 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 /// The identifier of the quote provider.
-enum QuoteProvider {
-  yahoo,
-  coincap,
-  coinmarketcap,
-  morningstarDe,
-  morningstarEs,
-  binance
-}
+enum QuoteProvider { yahoo, coincap, morningstarDe, morningstarEs, binance }
 
 class FinanceQuote {
   /// Returns a [Map] object containing the raw data retrieved. The map contains a key for each
@@ -75,12 +67,6 @@ class FinanceQuote {
         {
           retrievedQuoteData =
               await MorningstarEs.downloadRaw(symbols, client, logger);
-        }
-        break;
-      case QuoteProvider.coinmarketcap:
-        {
-          retrievedQuoteData =
-              await Coinmarketcap.downloadRaw(symbols, client, logger);
         }
         break;
       case QuoteProvider.coincap:
@@ -151,11 +137,6 @@ class FinanceQuote {
         case QuoteProvider.morningstarEs:
           {
             quotePrice[symbol] = MorningstarEs.parsePrice(rawQuote);
-          }
-          break;
-        case QuoteProvider.coinmarketcap:
-          {
-            quotePrice[symbol] = Coinmarketcap.parsePrice(rawQuote);
           }
           break;
         case QuoteProvider.coincap:
