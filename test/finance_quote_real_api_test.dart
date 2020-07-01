@@ -78,7 +78,7 @@ void main() {
       }
 
       expect(quote.keys.length, 1);
-      expect(quote['bitcoin'].keys.length, 2);
+      expect(quote['bitcoin'].keys.length, 3);
     });
 
     test('Binance', () async {

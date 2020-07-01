@@ -74,7 +74,7 @@ class Coincap {
     return <String, String>{
       'price': double.parse(rawQuote['priceUsd'] as String).toStringAsFixed(2),
       'currency': 'USD',
-      'change': (rawQuote['changePercent24Hr'] as double).toStringAsFixed(2),
+      'change': double.parse(rawQuote['changePercent24Hr'] as String).toStringAsFixed(2),
     };
   }
 }

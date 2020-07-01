@@ -836,9 +836,10 @@ void main() {
       }
 
       expect(quote.keys.length, 1);
-      expect(quote['bitcoin'].keys.length, 2);
+      expect(quote['bitcoin'].keys.length, 3);
       expect(quote['bitcoin']['price'], '9627.15');
       expect(quote['bitcoin']['currency'], 'USD');
+      expect(quote['bitcoin']['change'], '0.22');
 
       verify(client.get('https://api.coincap.io/v2/assets/bitcoin')).called(1);
     });
@@ -893,12 +894,14 @@ void main() {
       }
 
       expect(quote.keys.length, 2);
-      expect(quote['bitcoin'].keys.length, 2);
+      expect(quote['bitcoin'].keys.length, 3);
       expect(quote['bitcoin']['price'], '9627.15');
       expect(quote['bitcoin']['currency'], 'USD');
-      expect(quote['ethereum'].keys.length, 2);
+      expect(quote['bitcoin']['change'], '0.22');
+      expect(quote['ethereum'].keys.length, 3);
       expect(quote['ethereum']['price'], '170.73');
       expect(quote['ethereum']['currency'], 'USD');
+      expect(quote['ethereum']['change'], '1.07');
 
       verify(client.get('https://api.coincap.io/v2/assets/bitcoin')).called(1);
       verify(client.get('https://api.coincap.io/v2/assets/ethereum')).called(1);
