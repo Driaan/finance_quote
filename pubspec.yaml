@@ -1,6 +1,6 @@
 name: fin_quote
 description: A multi-platform API to retrieve quote information and prices for stocks (e.g. Amazon, Google), commodities (e.g. Gold, Oil) and crypto-currencies (e.g. Bitcoin, Ethereum).
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/feliwir/finance_quote
 
 environment:

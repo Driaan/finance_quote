@@ -72,7 +72,7 @@ class Binance {
     }
   }
 
-  static Map<String, String> parsePrice(Map<String, dynamic> rawQuote) {
+  static Map<String, String> parseInfo(Map<String, dynamic> rawQuote) {
     return <String, String>{
       'price': double.parse(rawQuote['price'] as String).toStringAsFixed(5),
       'currency': (rawQuote['symbol'] as String).contains('USDT')

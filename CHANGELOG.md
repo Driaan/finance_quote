@@ -1,3 +1,7 @@
+## [0.1.4] - 1/7/20
+
+*  Add historical data interface.
+
 ## [0.1.3] - 23/6/20
 
 *  Remove not working Coinmarketcap backend.

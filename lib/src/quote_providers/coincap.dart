@@ -70,10 +70,11 @@ class Coincap {
     }
   }
 
-  static Map<String, String> parsePrice(Map<String, dynamic> rawQuote) {
+  static Map<String, String> parseInfo(Map<String, dynamic> rawQuote) {
     return <String, String>{
       'price': double.parse(rawQuote['priceUsd'] as String).toStringAsFixed(2),
       'currency': 'USD',
+      'change': (rawQuote['changePercent24Hr'] as double).toStringAsFixed(2),
     };
   }
 }

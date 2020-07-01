@@ -89,7 +89,7 @@ class MorningstarDe {
     }
   }
 
-  static Map<String, String> parsePrice(Map<String, dynamic> rawQuote) {
+  static Map<String, String> parseInfo(Map<String, dynamic> rawQuote) {
     return <String, String>{
       'price': rawQuote['price'] as String,
       'currency': rawQuote['currency'] as String,

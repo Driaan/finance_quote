@@ -28,12 +28,12 @@ void main() {
     expect(quote.keys.length, 0);
   });
 
-  test('getPrice - No symbol', () async {
+  test('getInfo - No symbol', () async {
     final MockClient client = MockClient();
 
     Map<String, Map<String, dynamic>> quote;
     try {
-      quote = await FinanceQuote.getPrice(
+      quote = await FinanceQuote.getInfo(
           quoteProvider: QuoteProvider.yahoo,
           symbols: <String>[],
           client: client);
@@ -161,7 +161,7 @@ void main() {
     });
   });
 
-  group('getPrice Test [FinanceQuote] - Yahoo', () {
+  group('getInfo Test [FinanceQuote] - Yahoo', () {
     test('Yahoo: 1 symbol, 200 - Response', () async {
       final MockClient client = MockClient();
 
@@ -173,7 +173,7 @@ void main() {
 
       Map<String, Map<String, String>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.yahoo,
             symbols: <String>['KO'],
             client: client);
@@ -203,7 +203,7 @@ void main() {
 
       Map<String, Map<String, String>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.yahoo,
             symbols: <String>['KO', 'GOOG', 'AIR.PA'],
             client: client);
@@ -240,7 +240,7 @@ void main() {
 
       Map<String, Map<String, String>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.yahoo,
             symbols: <String>['KO'],
             client: client);
@@ -266,7 +266,7 @@ void main() {
 
       Map<String, Map<String, String>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.yahoo,
             symbols: <String>['KO'],
             client: client);
@@ -416,7 +416,7 @@ void main() {
     });
   });
 
-  group('getPrice Test [FinanceQuote] - MorningstarDe', () {
+  group('getInfo Test [FinanceQuote] - MorningstarDe', () {
     test('MorningstarDe: 1 symbol, 200 - Response', () async {
       final MockClient client = MockClient();
 
@@ -428,7 +428,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarDe,
             symbols: <String>['0P000001BW'],
             client: client);
@@ -469,7 +469,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarDe,
             symbols: <String>['0P000001BW', '0P00012BBI', '0P00009QPB'],
             client: client);
@@ -510,7 +510,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarDe,
             symbols: <String>['0P000001BW'],
             client: client);
@@ -534,7 +534,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarDe,
             symbols: <String>['0P000001BW'],
             client: client);
@@ -816,7 +816,7 @@ void main() {
     });
   });
 
-  group('getPrice Test [FinanceQuote] - Coincap', () {
+  group('getInfo Test [FinanceQuote] - Coincap', () {
     test('Coincap: 1 symbol, 200 - Response', () async {
       final MockClient client = MockClient();
 
@@ -827,7 +827,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap,
             symbols: <String>['bitcoin'],
             client: client);
@@ -852,7 +852,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap,
             symbols: <String>['asdf'],
             client: client);
@@ -884,7 +884,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap,
             symbols: <String>['bitcoin', 'adsf', 'ethereum'],
             client: client);
@@ -913,7 +913,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap,
             symbols: <String>['bitcoin'],
             client: client);
@@ -934,7 +934,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap,
             symbols: <String>['bitcoin'],
             client: client);
@@ -1097,7 +1097,7 @@ void main() {
     });
   });
 
-  group('getPrice Test [FinanceQuote] - Binance', () {
+  group('getInfo Test [FinanceQuote] - Binance', () {
     test('Binance: 1 symbol, 200 - Response', () async {
       final MockClient client = MockClient();
 
@@ -1108,7 +1108,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance,
             symbols: <String>['BTCUSDT'],
             client: client);
@@ -1137,7 +1137,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance,
             symbols: <String>['asdf'],
             client: client);
@@ -1173,7 +1173,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance,
             symbols: <String>['BTCUSDT', 'adsf', 'ETHBTC'],
             client: client);
@@ -1209,7 +1209,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance,
             symbols: <String>['BTCUSDT'],
             client: client);
@@ -1233,7 +1233,7 @@ void main() {
 
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance,
             symbols: <String>['BTCUSDT'],
             client: client);

@@ -14,10 +14,10 @@ class MockClient extends Mock implements http.Client {}
 void main() {
   group('downloadQuotePrice/downloadRawQuote Test [FinanceQuote] - Real API',
       () {
-    test('Yahoo', () async {
+    test('Yahoo getInfo', () async {
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.yahoo, symbols: <String>['KO']);
       } catch (e) {
         expect(e, 'No exception');
@@ -27,10 +27,23 @@ void main() {
       expect(quote['KO'].keys.length, 3);
     });
 
+    test('Yahoo getHistoricalData', () async {
+      Map<String, dynamic> data;
+      try {
+        data = await FinanceQuote.getHistoricalData(
+            quoteProvider: QuoteProvider.yahoo, symbol: 'KO');
+      } catch (e) {
+        expect(e, 'No exception');
+      }
+
+      expect(data.keys.length, 6);
+      expect(data['open'].length, 524);
+    });
+
     test('MorningstarDe', () async {
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarDe,
             symbols: <String>['0P000001BW']);
       } catch (e) {
@@ -44,7 +57,7 @@ void main() {
     test('MorningstarEs', () async {
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.morningstarEs,
             symbols: <String>['0P000001BW']);
       } catch (e) {
@@ -58,7 +71,7 @@ void main() {
     test('Coincap', () async {
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.coincap, symbols: <String>['bitcoin']);
       } catch (e) {
         expect(e, 'No exception');
@@ -71,7 +84,7 @@ void main() {
     test('Binance', () async {
       Map<String, Map<String, dynamic>> quote;
       try {
-        quote = await FinanceQuote.getPrice(
+        quote = await FinanceQuote.getInfo(
             quoteProvider: QuoteProvider.binance, symbols: <String>['BTCUSDT']);
       } catch (e) {
         expect(e, 'No exception');
