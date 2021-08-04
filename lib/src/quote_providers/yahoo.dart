@@ -8,19 +8,19 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class YahooApiException implements Exception {
-  final int statusCode;
-  final String message;
+  final int? statusCode;
+  final String? message;
 
   const YahooApiException({this.statusCode, this.message});
 }
 
 class Yahoo {
-  static Future<Map<String, dynamic>> downloadHistory(
+  static Future<Map<String, dynamic>?> downloadHistory(
       String symbol, http.Client client, Logger logger) async {
-    Map<String, dynamic> result = new Map<String, dynamic>();
+    Map<String, dynamic>? result = new Map<String, dynamic>();
 
     try {
-      result = await _getRawHistory(symbol, client);
+      result = await (_getRawHistory(symbol, client) as Future<Map<String, dynamic>>);
     } on YahooApiException catch (e) {
       logger.e(
           'YahooApiException{symbol: ${symbol}, statusCode: ${e.statusCode}, message: ${e.message}}');
@@ -29,21 +29,21 @@ class Yahoo {
     return result;
   }
 
-  static Future<Map<String, Map<String, dynamic>>> downloadRaw(
+  static Future<Map<String, Map<String, dynamic>?>> downloadRaw(
       List<String> symbols, http.Client client, Logger logger) async {
-    final Map<String, Map<String, dynamic>> results =
-        <String, Map<String, dynamic>>{};
+    final Map<String, Map<String, dynamic>?> results =
+        <String, Map<String, dynamic>?>{};
 
     try {
-      final Map<String, dynamic> quoteRaw = await _getRawQuote(symbols, client);
+      final Map<String, dynamic>? quoteRaw = await _getRawQuote(symbols, client);
 
       // Search in the answer obtained the data corresponding to the symbols.
       // If requested symbol data is found add it to [portfolioQuotePrices].
       for (String symbol in symbols) {
-        for (dynamic marketData in quoteRaw['result']) {
+        for (dynamic marketData in quoteRaw!['result']) {
           if (marketData['symbol'] == symbol) {
             // ignore: avoid_as
-            results[symbol] = marketData as Map<String, dynamic>;
+            results[symbol] = marketData as Map<String, dynamic>?;
           }
         }
       }
@@ -61,7 +61,7 @@ class Yahoo {
     return results;
   }
 
-  static Future<Map<String, dynamic>> _getRawQuote(
+  static Future<Map<String, dynamic>?> _getRawQuote(
       List<String> symbols, http.Client client) async {
     final String symbolList = symbols.join(',');
 
@@ -69,21 +69,21 @@ class Yahoo {
         'https://query1.finance.yahoo.com/v7/finance/quote?symbols=' +
             symbolList;
     try {
-      final http.Response quoteRes = await client.get(quoteUrl);
+      final http.Response quoteRes = await client.get(Uri.parse(quoteUrl));
       if (quoteRes != null &&
           quoteRes.statusCode == 200 &&
           quoteRes.body != null) {
         return parseRawQuote(quoteRes.body);
       } else {
         throw YahooApiException(
-            statusCode: quoteRes?.statusCode, message: 'Invalid response.');
+            statusCode: quoteRes.statusCode, message: 'Invalid response.');
       }
     } on http.ClientException {
       throw const YahooApiException(message: 'Connection failed.');
     }
   }
 
-  static Future<Map<String, dynamic>> _getRawHistory(
+  static Future<Map<String, dynamic>?> _getRawHistory(
       String symbol, http.Client client,
       {String interval = '1wk', String range = '10y'}) async {
     var queryParameters = {
@@ -100,27 +100,27 @@ class Yahoo {
         return parseRawHistory(quoteRes.body);
       } else {
         throw YahooApiException(
-            statusCode: quoteRes?.statusCode, message: 'Invalid response.');
+            statusCode: quoteRes.statusCode, message: 'Invalid response.');
       }
     } on http.ClientException {
       throw const YahooApiException(message: 'Connection failed.');
     }
   }
 
-  static Map<String, dynamic> parseRawQuote(String quoteResBody) {
+  static Map<String, dynamic>? parseRawQuote(String quoteResBody) {
     try {
       return const JsonDecoder().convert(quoteResBody)['quoteResponse']
-          as Map<String, dynamic>;
+          as Map<String, dynamic>?;
     } catch (e) {
       throw const YahooApiException(
           statusCode: 200, message: 'Quote was not parseable.');
     }
   }
 
-  static Map<String, dynamic> parseRawHistory(String quoteResBody) {
+  static Map<String, dynamic>? parseRawHistory(String quoteResBody) {
     try {
       return const JsonDecoder().convert(quoteResBody)['chart']
-          as Map<String, dynamic>;
+          as Map<String, dynamic>?;
     } catch (e) {
       throw const YahooApiException(
           statusCode: 200, message: 'History was not parseable.');
@@ -143,7 +143,7 @@ class Yahoo {
           (rawHistory['result'][0]['meta']['currency'] as String).toUpperCase()
     };
 
-    List<DateTime> parsedTimestamps = List<DateTime>();
+    late List<DateTime> parsedTimestamps = [];
     List<dynamic> timestamps = rawHistory['result'][0]['timestamp'];
     timestamps.forEach((stamp) {
       DateTime time = DateTime.fromMillisecondsSinceEpoch(stamp * 1000);

@@ -9,8 +9,8 @@ import 'package:html/parser.dart' show parse;
 import 'package:html/dom.dart';
 
 class MorningstarDeApiException implements Exception {
-  final int statusCode;
-  final String message;
+  final int? statusCode;
+  final String? message;
 
   const MorningstarDeApiException({this.statusCode, this.message});
 }
@@ -48,14 +48,14 @@ class MorningstarDe {
     final String quoteUrl =
         'http://tools.morningstar.de/de/stockreport/default.aspx?id=' + symbol;
     try {
-      final http.Response quoteRes = await client.get(quoteUrl);
+      final http.Response quoteRes = await client.get(Uri.parse(quoteUrl));
       if (quoteRes != null &&
           quoteRes.statusCode == 200 &&
           quoteRes.body != null) {
         return parseRawQuote(quoteRes.body);
       } else {
         throw MorningstarDeApiException(
-            statusCode: quoteRes?.statusCode, message: 'Invalid response.');
+            statusCode: quoteRes.statusCode, message: 'Invalid response.');
       }
     } on http.ClientException {
       throw const MorningstarDeApiException(message: 'Connection failed.');
@@ -69,11 +69,11 @@ class MorningstarDe {
       final Document document = parse(quoteResBody);
 
       final double price = f
-          .parse((document.querySelector('.price').nodes[0] as Text).data)
+          .parse((document.querySelector('.price')!.nodes[0] as Text).data)
           .toDouble();
 
       final String currency =
-          (document.querySelector('.priceInformation').nodes[4] as Text)
+          (document.querySelector('.priceInformation')!.nodes[4] as Text)
               .data
               .split(' | ')[1]
               .split('\n')[0]
@@ -89,10 +89,10 @@ class MorningstarDe {
     }
   }
 
-  static Map<String, String> parseInfo(Map<String, dynamic> rawQuote) {
-    return <String, String>{
-      'price': rawQuote['price'] as String,
-      'currency': rawQuote['currency'] as String,
+  static Map<String, String?> parseInfo(Map<String, dynamic> rawQuote) {
+    return <String, String?>{
+      'price': rawQuote['price'] as String?,
+      'currency': rawQuote['currency'] as String?,
     };
   }
 }

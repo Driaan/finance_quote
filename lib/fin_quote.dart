@@ -18,11 +18,11 @@ import 'package:logger/logger.dart';
 enum QuoteProvider { yahoo, coincap, morningstarDe, morningstarEs, binance }
 
 class FinanceQuote {
-  static Future<Map<String, dynamic>> getRawHistoricalData(
-      {@required QuoteProvider quoteProvider,
-      @required String symbol,
-      http.Client client,
-      Logger logger}) async {
+  static Future<Map<String, dynamic>?> getRawHistoricalData(
+      {required QuoteProvider quoteProvider,
+      required String symbol,
+      http.Client? client,
+      Logger? logger}) async {
     // If client is not provided, use http IO client
     client ??= http.Client();
 
@@ -30,7 +30,7 @@ class FinanceQuote {
     logger ??= Logger(printer: AppLogger('FinanceQuote'));
 
     // Retrieved market data.
-    Map<String, dynamic> retrievedHistoryData = Map<String, dynamic>();
+    Map<String, dynamic>? retrievedHistoryData = Map<String, dynamic>();
 
     if (symbol.isEmpty) {
       return retrievedHistoryData;
@@ -40,7 +40,7 @@ class FinanceQuote {
       case QuoteProvider.yahoo:
         {
           retrievedHistoryData =
-              await Yahoo.downloadHistory(symbol, client, logger);
+              await (Yahoo.downloadHistory(symbol, client, logger) as Future<Map<String, dynamic>>);
         }
         break;
       default:
@@ -67,11 +67,11 @@ class FinanceQuote {
   /// This is used for testing purposes.
   ///
   /// If specified, the `logger` provided will be used, otherwise default Logger will be used.
-  static Future<Map<String, Map<String, dynamic>>> getRawData(
-      {@required QuoteProvider quoteProvider,
-      @required List<String> symbols,
-      http.Client client,
-      Logger logger}) async {
+  static Future<Map<String, Map<String, dynamic>?>> getRawData(
+      {required QuoteProvider quoteProvider,
+      required List<String> symbols,
+      http.Client? client,
+      Logger? logger}) async {
     // If client is not provided, use http IO client
     client ??= http.Client();
 
@@ -79,7 +79,7 @@ class FinanceQuote {
     logger ??= Logger(printer: AppLogger('FinanceQuote'));
 
     // Retrieved market data.
-    Map<String, Map<String, dynamic>> retrievedQuoteData =
+    Map<String, Map<String, dynamic>?> retrievedQuoteData =
         <String, Map<String, dynamic>>{};
 
     if (symbols.isEmpty) {
@@ -139,54 +139,54 @@ class FinanceQuote {
   /// If specified, the `client` provided will be used. This is used for testing purposes.
   ///
   /// If specified, the `logger` provided will be used, otherwise default Logger will be used.
-  static Future<Map<String, Map<String, String>>> getInfo(
-      {@required QuoteProvider quoteProvider,
-      @required List<String> symbols,
-      http.Client client,
-      Logger logger}) async {
-    final Map<String, Map<String, String>> quoteInfo =
+  static Future<Map<String, Map<String, String?>>> getInfo(
+      {required QuoteProvider quoteProvider,
+      required List<String> symbols,
+      http.Client? client,
+      Logger? logger}) async {
+    final Map<String, Map<String, String?>> quoteInfo =
         <String, Map<String, String>>{};
 
     if (symbols.isEmpty) {
       return quoteInfo;
     }
 
-    final Map<String, Map<String, dynamic>> rawQuotes = await getRawData(
+    final Map<String, Map<String, dynamic>?> rawQuotes = await getRawData(
         quoteProvider: quoteProvider,
         symbols: symbols,
         client: client,
         logger: logger);
 
-    rawQuotes.forEach((String symbol, Map<String, dynamic> rawQuote) {
+    rawQuotes.forEach((String symbol, Map<String, dynamic>? rawQuote) {
       switch (quoteProvider) {
         case QuoteProvider.yahoo:
           {
-            quoteInfo[symbol] = Yahoo.parseInfo(rawQuote);
+            quoteInfo[symbol] = Yahoo.parseInfo(rawQuote!);
           }
           break;
         case QuoteProvider.morningstarDe:
           {
-            quoteInfo[symbol] = MorningstarDe.parseInfo(rawQuote);
+            quoteInfo[symbol] = MorningstarDe.parseInfo(rawQuote!);
           }
           break;
         case QuoteProvider.morningstarEs:
           {
-            quoteInfo[symbol] = MorningstarEs.parseInfo(rawQuote);
+            quoteInfo[symbol] = MorningstarEs.parseInfo(rawQuote!);
           }
           break;
         case QuoteProvider.coincap:
           {
-            quoteInfo[symbol] = Coincap.parseInfo(rawQuote);
+            quoteInfo[symbol] = Coincap.parseInfo(rawQuote!);
           }
           break;
         case QuoteProvider.binance:
           {
-            quoteInfo[symbol] = Binance.parseInfo(rawQuote);
+            quoteInfo[symbol] = Binance.parseInfo(rawQuote!);
           }
           break;
         default:
           {
-            logger.e('Unknown Quote Source');
+            logger!.e('Unknown Quote Source');
           }
           break;
       }
@@ -195,17 +195,17 @@ class FinanceQuote {
   }
 
   static Future<Map<String, dynamic>> getHistoricalData(
-      {@required QuoteProvider quoteProvider,
-      @required String symbol,
-      http.Client client,
-      Logger logger}) async {
+      {required QuoteProvider quoteProvider,
+      required String symbol,
+      http.Client? client,
+      Logger? logger}) async {
     Map<String, dynamic> historyData = Map<String, dynamic>();
 
     if (symbol.isEmpty) {
       return historyData;
     }
 
-    final Map<String, dynamic> rawHistory = await getRawHistoricalData(
+    final Map<String, dynamic>? rawHistory = await getRawHistoricalData(
         quoteProvider: quoteProvider,
         symbol: symbol,
         client: client,
@@ -213,10 +213,10 @@ class FinanceQuote {
 
     switch (quoteProvider) {
       case QuoteProvider.yahoo:
-        historyData = Yahoo.parseHistoricalData(rawHistory);
+        historyData = Yahoo.parseHistoricalData(rawHistory!);
         break;
       default:
-        logger.e('Unknown Quote Source');
+        logger!.e('Unknown Quote Source');
     }
 
     return historyData;
