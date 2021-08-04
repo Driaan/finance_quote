@@ -5,7 +5,6 @@
 library fin_quote;
 
 import 'package:fin_quote/src/quote_providers/binance.dart';
-import 'package:meta/meta.dart';
 import 'package:fin_quote/src/utils/app_logger.dart';
 import 'package:fin_quote/src/quote_providers/coincap.dart';
 import 'package:fin_quote/src/quote_providers/morningstarDe.dart';
@@ -40,7 +39,8 @@ class FinanceQuote {
       case QuoteProvider.yahoo:
         {
           retrievedHistoryData =
-              await (Yahoo.downloadHistory(symbol, client, logger) as Future<Map<String, dynamic>>);
+              await (Yahoo.downloadHistory(symbol, client, logger)
+                  as Future<Map<String, dynamic>>);
         }
         break;
       default:
